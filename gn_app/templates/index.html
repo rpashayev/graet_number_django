@@ -15,7 +15,7 @@
         
         <div class="col-6 mx-auto">
             
-            {% if request.session.try > 5 %}
+            {% if request.session.tries_left < 1 %}
                 <div class="card bg-primary">
                     <h2>You Lose!</h2>
                     <h3>The number was {{ request.session.num }}</h3>
@@ -24,6 +24,7 @@
                         <input type="submit" value="Reset" name="reset_btn" class="btn btn-warning mb-2">
                     </form>
                 </div>
+            
             {% else %}
                 {% if 'guess' in request.session %}
                     {% if request.session.guess > request.session.num %}
@@ -47,7 +48,7 @@
                 <form action="/guess" method="post" class="bg-dark rounded text-warning text-center">
                     {% csrf_token %}
                     <div class="form-outline">
-                        <label for="guess_number">Your guess:</label>{{ request.session.num }}
+                        <label for="guess_number">Your guess:</label>
                         <input type="text" name="guess_number" class="form-control col-sm-8 mt-2 mx-auto text-right">
                     </div>
                     <div>
